@@ -29,7 +29,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Split a file into multiple parts.")
     parser.add_argument('input_file', type=str, help="The input file to be split.")
     parser.add_argument('--output-folder', type=str, default='./split_files', help="The output folder to save the split files.")
-    parser.add_argument('--max-size', type=int, default=50, help="The maximum size (in MB) for each split file.")
+    parser.add_argument('--max-size', type=int, default=90, help="The maximum size (in MB) for each split file.")
 
     args = parser.parse_args()
 
