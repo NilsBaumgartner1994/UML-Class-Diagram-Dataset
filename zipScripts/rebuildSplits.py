@@ -1,5 +1,4 @@
 import os
-import zipfile
 import argparse
 
 def combine_files(parts_folder, output_folder):
@@ -13,7 +12,15 @@ def combine_files(parts_folder, output_folder):
         key=lambda x: int(x.rsplit("part", 1)[-1].split('.')[0])
     )
 
-    combined_zip_path = os.path.join(output_folder, 'combined_file.zip')
+    # Get the common prefix of the part files to name the combined file
+    # First strip the part numbering (e.g., "_part1") and then find the common prefix
+    stripped_names = [name.rsplit('_part', 1)[0] for name in parts]
+    common_prefix = os.path.commonprefix(stripped_names)
+
+    # Ensure the combined file has the correct '.zip' extension
+    combined_name = common_prefix + '.zip' if not common_prefix.lower().endswith('.zip') else common_prefix
+
+    combined_zip_path = os.path.join(output_folder, os.path.basename(combined_name))
 
     # Combine all parts into one file
     with open(combined_zip_path, 'wb') as combined_file:
@@ -25,21 +32,11 @@ def combine_files(parts_folder, output_folder):
     print(f"Combined file created at {combined_zip_path}")
     return combined_zip_path
 
-def unzip_file(zip_path, output_folder):
-    # Try to unzip the file if it is a zip file
-    try:
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(output_folder)
-            print(f"Extracted zip to {output_folder}")
-    except zipfile.BadZipFile:
-        print("The combined file is not a zip file. Please check the parts and ensure they are correct and complete.")
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Combine split parts of a zip file and extract it.")
+    parser = argparse.ArgumentParser(description="Combine split parts of a zip file.")
     parser.add_argument('parts_folder', type=str, help="The folder containing the split zip parts.")
-    parser.add_argument('--output-folder', type=str, default='./', help="The output folder to save the combined zip and extract its contents.")
+    parser.add_argument('--output-folder', type=str, default='./', help="The output folder to save the combined zip.")
 
     args = parser.parse_args()
 
-    combined_zip_path = combine_files(args.parts_folder, args.output_folder)
-    unzip_file(combined_zip_path, args.output_folder)
+    combine_files(args.parts_folder, args.output_folder)
