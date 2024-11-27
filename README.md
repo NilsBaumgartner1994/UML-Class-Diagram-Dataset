@@ -50,6 +50,18 @@ Please note that due to the size of the dataset, special arrangements might be r
 
 
 ```
+@conference{umlClassDiagrams2024bBaumgartner,
+  author    = {Nils Baumgartner and Elke Pulvermüller},
+  title     = {An Extensive Analysis of Data Clumps in UML Class Diagrams},
+  booktitle = {Proceedings of the 19th International Conference on Evaluation of Novel Approaches to Software Engineering - Volume 1: ENASE},
+  year      = {2024},
+  pages     = {15-26},
+  publisher = {SciTePress},
+  organization = {INSTICC},
+  doi       = {10.5220/0012550500003687},
+  isbn      = {978-989-758-696-5}
+}
+
 @misc{UMLClassDiagramDataset},
   author = {Nils Baumgartner},
   title = {UML Class Diagram Dataset},
